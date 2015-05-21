@@ -23,22 +23,30 @@ function queen_form() {
         '#title' => 'Starting X position of Queen',
         '#type' => 'textfield',
         '#description' => t('Enter the starting X coordinate for the Queen'),
+        '#element_validate' => array('element_validate_number', 'element_validate_range'),
+        '#required' => TRUE,
     );
     $form['queen_y'] = array (
         '#title' => 'Starting Y position of Queen',
         '#type' => 'textfield',
         '#description' => t('Enter the starting Y coordinate for the Queen'),
+        '#element_validate' => array('element_validate_number', 'element_validate_range'),
+        '#required' => TRUE,
     );
 
     $form['pawn_x'] = array (
         '#title' => 'Starting X position of Pawn',
         '#type' => 'textfield',
         '#description' => t('Enter the starting X coordinate for the Pawn'),
+        '#element_validate' => array('element_validate_number', 'element_validate_range'),
+        '#required' => TRUE,
     );
     $form['pawn_y'] = array (
         '#title' => 'Starting Y position of Pawn',
         '#type' => 'textfield',
         '#description' => t('Enter the starting Y coordinate for the Pawn'),
+        '#element_validate' => array('element_validate_number', 'element_validate_range'),
+        '#required' => TRUE,
     );
 
     $form['submit'] =array(
@@ -47,6 +55,12 @@ function queen_form() {
     );
     return $form;
 
+}
+
+function element_validate_range($element) {
+    if ($element['#value'] < 1 || $element['#value'] > 8 {
+        form_error($element, t('Number must be between 1 and 8 to fit on the chess board.'));
+    }
 }
 
 function queen_form_submit($form, &$form_state) {
