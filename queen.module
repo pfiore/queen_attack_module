@@ -1,0 +1,81 @@
+<?php
+
+function queen_menu() {
+    $items['queen'] = array(
+        'title' => 'Queen Attack!',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('queen_form'),
+        'access callback' => TRUE,
+        'type' => MENU_NORMAL_ITEM,
+    );
+
+    $items['attack'] = array(
+        'title' => 'Attack!',
+        'page callback' => 'queen_attack',
+        'access callback' => TRUE,
+        'type' => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+function queen_form() {
+    $form['queen_x'] = array (
+        '#title' => 'Starting X position of Queen',
+        '#type' => 'textfield',
+        '#description' => t('Enter the starting X coordinate for the Queen'),
+    );
+    $form['queen_y'] = array (
+        '#title' => 'Starting Y position of Queen',
+        '#type' => 'textfield',
+        '#description' => t('Enter the starting Y coordinate for the Queen'),
+    );
+
+    $form['pawn_x'] = array (
+        '#title' => 'Starting X position of Pawn',
+        '#type' => 'textfield',
+        '#description' => t('Enter the starting X coordinate for the Pawn'),
+    );
+    $form['pawn_y'] = array (
+        '#title' => 'Starting Y position of Pawn',
+        '#type' => 'textfield',
+        '#description' => t('Enter the starting Y coordinate for the Pawn'),
+    );
+
+    $form['submit'] =array(
+        '#type' => 'submit',
+        '#value' => 'Can the Queen attack the Pawn?',
+    );
+    return $form;
+
+}
+
+function queen_form_submit($form, &$form_state) {
+    $queen_x = $form_state['value']['queen_x'];
+    $queen_y = $form_state['value']['queen_y'];
+    $pawn_x = $form_state['value']['pawn_x'];
+    $pawn_y = $form_state['value']['pawn_y'];
+    $attack = "";
+
+    if($queen_x == $pawn_x && $queen_y == $pawn_y) {
+        $attack = "Both Queen and Pawn can't occupy the same space.";
+    } else {
+        if(abs($queen_x - $pawn_x) == abs($queen_y - $pawn_y) ) {
+            $attack = "The Queen can attack the Pawn";
+        }
+        elseif($queen_x - $pawn_x == 0 || $queen_y - $pawn_y == 0) {
+            $attack = "The Queen can attack the Pawn";
+        }
+        else{
+            $attack = "Not in range";
+        }
+    }
+
+    $_SESSION['queen_result'] = $attack;
+
+    $form_state['redirect'] = 'attack';
+}
+
+function queen_attack() {
+    $answer = $_SESSION['queen_result'];
+    return $answer;
+}

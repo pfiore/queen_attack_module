@@ -1,0 +1,5 @@
+name = Queen Attack Mark II
+description = User inputs two sets of coordinates representing the positions on a chess board of the queen and the piece that she is trying to take. The success page on your module should display whether or not the piece is within reach of the queen, assuming it's her turn.
+package = Epicodus Examples
+core = 7.x
+files[] = queen.module
