@@ -64,7 +64,7 @@ function element_validate_range_queen($element) {
 }
 
 function element_validate_whole_number($element) {
-    if (floor($element['#value']) !== is_numeric($element['#value']) ){
+    if (floor($element['#value']) !== int($element['#value'])){
         form_error($element, t('Input must be a whole number'));
     }
 }
