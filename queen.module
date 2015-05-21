@@ -58,7 +58,7 @@ function queen_form() {
 }
 
 function element_validate_range($element) {
-    if ($element['#value'] < 1 || $element['#value'] > 8 {
+    if ($element['#value'] < 1 || $element['#value'] > 8 ) {
         form_error($element, t('Number must be between 1 and 8 to fit on the chess board.'));
     }
 }
@@ -72,16 +72,15 @@ function queen_form_submit($form, &$form_state) {
 
     if($queen_x == $pawn_x && $queen_y == $pawn_y) {
         $attack = "Both Queen and Pawn can't occupy the same space.";
-    } else {
-        if(abs($queen_x - $pawn_x) == abs($queen_y - $pawn_y) ) {
-            $attack = "The Queen can attack the Pawn";
-        }
-        elseif($queen_x - $pawn_x == 0 || $queen_y - $pawn_y == 0) {
-            $attack = "The Queen can attack the Pawn";
-        }
-        else{
-            $attack = "Not in range";
-        }
+    }
+    elseif(abs($queen_x - $pawn_x) == abs($queen_y - $pawn_y) ) {
+        $attack = "The Queen can attack the Pawn";
+    }
+    elseif($queen_x - $pawn_x == 0 || $queen_y - $pawn_y == 0) {
+        $attack = "The Queen can attack the Pawn";
+    }
+    else{
+        $attack = "Not in range";
     }
 
     $_SESSION['queen_result'] = $attack;
